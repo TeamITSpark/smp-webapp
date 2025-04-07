@@ -1,0 +1,40 @@
+pipeline {
+   agent { label 'linux-agent1' }
+   
+   stages {
+      stage('Build') {
+         steps {
+            // Get some code from a GitHub repository
+            git 'https://github.com/TeamITSpark/smp-webapp.git'
+			withMaven(
+				maven: 'mvn-3.9.8'
+			) {
+			sh "mvn clean package"
+			}      
+         }
+      }
+      stage('Peform OWASP Dependency Scan ') {
+        steps {
+			sh "mvn dependency-check:check"
+		}
+      }
+	  stage('Deploy Application to the target Dev/QA Server') {
+        steps {
+			sh '''
+				# Check if the branch name contains "dev" or "qa"
+				if [[ "$GIT_BRANCH" == *dev* ]]; then
+				# Deploy to dev server
+				scp target/sample-webapp2-1.1.war vagrant@192.168.56.38:/var/lib/tomcat10/webapps/sample.war
+				elif [[ "$GIT_BRANCH" == *qa* ]]; then
+				# Deploy to qa server
+				scp target/sample-webapp2-1.1.war vagrant@192.168.56.14:/var/lib/tomcat10/webapps/sample.war
+				else
+				# Handle unexpected branch name
+				echo "Branch does not match 'dev' or 'qa': $GIT_BRANCH"
+				exit 1
+				fi
+			'''
+		}
+      }
+   }
+}
