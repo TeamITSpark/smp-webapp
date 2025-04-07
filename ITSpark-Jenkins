@@ -5,14 +5,14 @@ pipeline {
       stage('Build') {
          steps {
             // Get some code from a GitHub repository
-            git 'https://github.com/TeamITSpark/smp-webapp.git'
-			withMaven(
-				maven: 'mvn-3.9.8'
-			) {
-			sh "mvn clean package"
-			}      
+            git 'https://github.com/TeamITSpark/smp-webapp.git'      
          }
       }
+	  stage('perform mvn clean package'){
+	    steps {
+			sh "mvn clean package"
+		}
+	  }
       stage('Peform OWASP Dependency Scan ') {
         steps {
 			sh "mvn dependency-check:check"
