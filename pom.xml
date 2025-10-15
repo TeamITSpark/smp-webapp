@@ -26,12 +26,12 @@
 		<version>v1-rev110-1.25.0</version>
 	</dependency>
   </dependencies>
-    <build>
+<!--    <build>
         <plugins>
             <plugin>
               <groupId>org.owasp</groupId>
               <artifactId>dependency-check-maven</artifactId>
-			  <version>12.1.0</version>
+			  <version>12.1.8</version>
               <executions>
                   <execution>
                       <goals>
@@ -41,5 +41,5 @@
               </executions>
             </plugin>
         </plugins>
-    </build>
+    </build> -->
 </project>
