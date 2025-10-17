@@ -6,6 +6,10 @@ pipeline {
         maven 'maven-3.9.11'
     }
 
+    triggers {
+        pollSCM('H/5 * * * *')
+    }
+
     environment {
         MAVEN_HOME = tool 'maven-3.9.11'
         PATH = "${env.MAVEN_HOME}/bin:${env.PATH}"
