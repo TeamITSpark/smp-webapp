@@ -17,15 +17,18 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/TeamITSpark/smp-webapp.git'
             }
         }
-		stage('Validate with Maven') {
-            steps {
-                sh 'mvn validate'
-            }
-        }
-
-        stage('Build with Maven') {
-            steps {
-                sh 'mvn clean package'
+		stage('Validate and Build') {
+            parallel {
+                stage('Validate') {
+                    steps {
+                        sh 'mvn validate'
+                    }
+                }
+                stage('Build') {
+                    steps {
+                        sh 'mvn clean package'
+                    }
+                }
             }
         }
 		
