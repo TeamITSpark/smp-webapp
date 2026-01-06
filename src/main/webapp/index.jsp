@@ -1,5 +1,5 @@
 <html>
 <body bgcolor="green">
-<h2>IT Spark Learning Java WebAPP with Junit's with Mentor-hello</h2>
+<h2>IT Spark Learning Java WebAPP with Junit's with hello</h2>
 </body>
 </html>
